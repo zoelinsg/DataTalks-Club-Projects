@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{% if todo %}Edit TODO{% else %}Create TODO{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label>Title:
+            <input type="text" name="title" value="{{ todo.title|default_if_none:'' }}" required>
+        </label>
+    </p>
+    <p>
+        <label>Description:
+            <textarea name="description">{{ todo.description|default_if_none:'' }}</textarea>
+        </label>
+    </p>
+    <p>
+        <label>Due date:
+            <input type="date" name="due_date"
+                   value="{% if todo.due_date %}{{ todo.due_date|date:'Y-m-d' }}{% endif %}">
+        </label>
+    </p>
+    <button type="submit">Save</button>
+</form>
+
+<p><a href="{% url 'todo_list' %}">Back to list</a></p>
+{% endblock %}

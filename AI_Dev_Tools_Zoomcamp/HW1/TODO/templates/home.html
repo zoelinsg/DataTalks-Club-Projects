@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My TODO List</h2>
+
+<p><a href="{% url 'todo_create' %}">➕ Add new TODO</a></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Due date</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for todo in todos %}
+        <tr>
+            <td>
+                {% if todo.is_resolved %}
+                    <s>{{ todo.title }}</s>
+                {% else %}
+                    {{ todo.title }}
+                {% endif %}
+            </td>
+            <td>{{ todo.due_date|default:"-" }}</td>
+            <td>{{ todo.is_resolved|yesno:"Done,Pending" }}</td>
+            <td>
+                <a href="{% url 'todo_edit' todo.pk %}">Edit</a> |
+                <a href="{% url 'todo_toggle_resolved' todo.pk %}">
+                    {% if todo.is_resolved %}Mark as pending{% else %}Mark as done{% endif %}
+                </a> |
+                <a href="{% url 'todo_delete' todo.pk %}">Delete</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="4">No TODO items yet</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

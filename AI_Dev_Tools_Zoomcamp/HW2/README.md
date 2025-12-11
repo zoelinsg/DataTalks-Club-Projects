@@ -1,4 +1,4 @@
-# HW2 – Online Coding Interview Platform
+# HW2 – End-To-End Project
 
 AI Dev Tools Zoomcamp 2025 – Homework 2
 
